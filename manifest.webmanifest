@@ -1,0 +1,12 @@
+{
+  "name": "사회인야구 수비의 디테일",
+  "short_name": "수비의 디테일",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f4",
+  "theme_color": "#0b3d2e",
+  "description": "포지션·주자·아웃카운트별 사회인야구 수비 모바일 매뉴얼",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
