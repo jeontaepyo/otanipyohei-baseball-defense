@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b3d2e" />
-  <meta name="description" content="사회인야구 수비를 포지션·주자·아웃카운트별로 바로 찾는 모바일 수비 매뉴얼" />
-  <meta property="og:title" content="사회인야구 수비의 디테일" />
-  <meta property="og:description" content="포지션·주자·아웃카운트만 선택하면 지금 해야 할 수비를 바로 찾습니다." />
+  <meta name="theme-color" content="#0d3328" />
+  <meta name="description" content="오태니표헤이의 사회인야구 수비의 디테일 — 포지션·주자·아웃카운트·플레이별 실전 수비 모바일 매뉴얼" />
+  <meta property="og:title" content="오태니표헤이의 사회인야구 수비의 디테일" />
+  <meta property="og:description" content="경험하기 전에 배우는 실전 팀 디펜스. 경기장에서 10초 안에 수비 답을 찾으세요." />
   <meta property="og:type" content="website" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="오태니표헤이 수비" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
-  <title>사회인야구 수비의 디테일</title>
+  <title>오태니표헤이의 사회인야구 수비의 디테일</title>
 </head>
 <body>
   <div id="app" class="app-shell">
     <header class="topbar">
       <button class="icon-btn" id="homeBtn" aria-label="홈">⌂</button>
       <div class="brand-wrap">
+        <div class="brand-mini">오태니표헤이의</div>
         <div class="brand">사회인야구 수비의 디테일</div>
         <div class="crumb" id="crumb">HOME</div>
       </div>
@@ -30,13 +34,14 @@
       <button data-route="home">⌂<span>홈</span></button>
       <button data-route="positions">⚾<span>포지션</span></button>
       <button data-route="situations">◇<span>상황</span></button>
+      <button data-route="plays">▶<span>플레이</span></button>
       <button data-route="favorites">☆<span>저장</span></button>
     </nav>
   </div>
 
   <dialog id="searchDialog" class="search-dialog">
     <form method="dialog" class="search-head">
-      <input id="searchInput" type="search" placeholder="예: 2루 도루, 만루 2아웃, CONTACT" autocomplete="off" />
+      <input id="searchInput" type="search" placeholder="예: 2루 도루, R2 번트, CONTACT, 인필드플라이" autocomplete="off" />
       <button value="cancel">닫기</button>
     </form>
     <div id="searchResults" class="search-results"></div>

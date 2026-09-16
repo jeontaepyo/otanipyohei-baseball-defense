@@ -1,27 +1,23 @@
-# 사회인야구 수비의 디테일 — Mobile Web App v0.1
+# 오태니표헤이의 사회인야구 수비의 디테일 — Mobile Web App v0.2
 
-## 현재 포함
-- 9개 포지션 30초 요약
-- 8개 주자 상태 × 0/1/2아웃 = 24 Base-Out
-- CORE 원칙
-- 도루/더블스틸/히트앤런/번트/스퀴즈/병살/런다운/태그업/폭투/컷오프/악송구/인필드플라이
-- 검색
-- 즐겨찾기(localStorage)
-- 최근 본 페이지(localStorage)
-- PWA manifest / service worker 기반
+스마트폰에서 **포지션 / 주자 / 아웃카운트 / 플레이**로 실전 수비를 빠르게 찾는 사회인야구 모바일 매뉴얼입니다.
 
-## 로컬 확인
-```bash
-python3 -m http.server 8080
-```
-그 다음 브라우저에서 http://localhost:8080/ 접속.
+## v0.2 주요 변경
+- 브랜딩: `오태니표헤이의 사회인야구 수비의 디테일`
+- 9개 포지션 상세 목차 및 세부 상황 페이지
+- PART 0~10 읽기 모드
+- CORE / RULE / TEAM / OPTION 태그
+- 전술도 12종(모바일 벡터 SVG)
+- 24 Base-Out 상황
+- 플레이 Quick Find
+- 검색 / 즐겨찾기 / 최근 본 페이지
+- 브라우저 공유 버튼
+- PWA manifest / service worker
 
-## GitHub Pages 배포
-저장소 루트에 이 폴더의 파일을 올리고 GitHub Pages를 활성화하면 정적 웹앱으로 동작한다.
+## 배포
+GitHub Pages 저장소의 기존 7개 파일을 이 폴더의 파일로 덮어쓰면 됩니다.
 
-## 실제 배포 전에 추가할 것
-1. 마스터 원고 전체 세부 페이지
-2. 전술도/도해
-3. RULE/TEAM/OPTION 태그 전수 QA
-4. 카카오톡 공유용 대표 이미지(OG image)
-5. GitHub Pages 실제 URL에서 iOS/Android 설치 및 오프라인 테스트
+## 주의
+- `TEAM`: 도루 커버, 번트 로테이션, 컷맨 등 팀 약속 우선
+- `RULE`: 공식 규칙 기반이며 참가 리그 로컬룰 우선
+- `OPTION`: 점수·아웃·주자·선수 능력에 따라 달라지는 선택
