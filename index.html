@@ -77,23 +77,3 @@
   "
   hidden>
 </div>
-
-<script>
-  fetch('https://teph.goatcounter.com/counter/TOTAL.json')
-    .then(response => {
-      if (!response.ok) throw new Error();
-      return response.json();
-    })
-    .then(data => {
-      const counter = document.getElementById('visitorCounter');
-
-      if (data && data.count) {
-        counter.textContent = `⚾ 누적 방문 ${data.count}명`;
-        counter.hidden = false;
-      }
-    })
-    .catch(() => {});
-</script>
-
-</body>
-</html>
