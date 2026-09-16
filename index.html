@@ -47,7 +47,43 @@
     <div id="searchResults" class="search-results"></div>
   </dialog>
 
-  <script src="app.js"></script>
-  <script src="backfix.js"></script>
+<script src="app.js"></script>
+
+<!-- GoatCounter 방문 통계 -->
+<script
+  data-goatcounter="https://teph.goatcounter.com/count"
+  async
+  src="https://gc.zgo.at/count.js">
+</script>
+
+<!-- 누적 방문자 표시 -->
+<div
+  id="visitorCounter"
+  style="
+    text-align:center;
+    font-size:11px;
+    color:#68736f;
+    margin:10px 14px 22px;
+  "
+  hidden>
+</div>
+
+<script>
+  fetch('https://teph.goatcounter.com/counter/TOTAL.json')
+    .then(response => {
+      if (!response.ok) throw new Error();
+      return response.json();
+    })
+    .then(data => {
+      const counter = document.getElementById('visitorCounter');
+
+      if (data && data.count) {
+        counter.textContent = `⚾ 누적 방문 ${data.count}명`;
+        counter.hidden = false;
+      }
+    })
+    .catch(() => {});
+</script>
+
 </body>
 </html>
