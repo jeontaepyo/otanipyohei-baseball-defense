@@ -16,15 +16,18 @@
   <link rel="stylesheet" href="styles.css" />
   <title>오태니표헤이의 사회인야구 수비의 디테일</title>
 </head>
+
 <body>
   <div id="app" class="app-shell">
     <header class="topbar">
       <button class="icon-btn" id="homeBtn" aria-label="홈">⌂</button>
+
       <div class="brand-wrap">
         <div class="brand-mini">오태니표헤이의</div>
         <div class="brand">사회인야구 수비의 디테일</div>
         <div class="crumb" id="crumb">HOME</div>
       </div>
+
       <button class="icon-btn" id="searchBtn" aria-label="검색">⌕</button>
     </header>
 
@@ -41,39 +44,77 @@
 
   <dialog id="searchDialog" class="search-dialog">
     <form method="dialog" class="search-head">
-      <input id="searchInput" type="search" placeholder="예: 2루 도루, R2 번트, CONTACT, 인필드플라이" autocomplete="off" />
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="예: 2루 도루, R2 번트, CONTACT, 인필드플라이"
+        autocomplete="off"
+      />
       <button value="cancel">닫기</button>
     </form>
+
     <div id="searchResults" class="search-results"></div>
   </dialog>
 
-<script src="app.js"></script>
+  <script src="app.js"></script>
 
-<!-- GoatCounter 방문 통계 -->
-<script
-  data-goatcounter="https://teph.goatcounter.com/count"
-  async
-  src="https://gc.zgo.at/count.js">
-</script>
+  <!-- GoatCounter 방문 통계 -->
+  <script
+    data-goatcounter="https://teph.goatcounter.com/count"
+    async
+    src="https://gc.zgo.at/count.js">
+  </script>
 
-<!-- 누적 방문자 표시 -->
-<div
-  id="visitorCounter"
-  style="
-    position:fixed;
-    bottom:76px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:40;
-    background:rgba(13,51,40,.94);
-    color:white;
-    padding:7px 14px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:-0.02em;
-    box-shadow:0 4px 14px rgba(0,0,0,.16);
-    white-space:nowrap;
-  "
-  hidden>
-</div>
+  <!-- 방문자 수 표시 -->
+  <div
+    id="visitorCounter"
+    style="
+      position: fixed;
+      right: 16px;
+      bottom: 82px;
+      z-index: 9999;
+
+      background: #0d3328;
+      color: #ffffff;
+
+      padding: 9px 15px;
+      border-radius: 999px;
+
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+
+      box-shadow: 0 5px 18px rgba(0,0,0,.22);
+
+      white-space: nowrap;
+    "
+  >
+    ⚾ 방문자 수 불러오는 중…
+  </div>
+
+  <script>
+    fetch('https://teph.goatcounter.com/counter/TOTAL.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('GoatCounter response error');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const counter = document.getElementById('visitorCounter');
+
+        if (data && data.count !== undefined) {
+          counter.textContent = `⚾ 누적 방문 ${data.count}명`;
+        } else {
+          counter.textContent = '⚾ 방문자 집계 중';
+        }
+      })
+      .catch(error => {
+        console.error('Visitor counter error:', error);
+
+        document.getElementById('visitorCounter').textContent =
+          '⚾ 방문자 집계 중';
+      });
+  </script>
+</body>
+</html>
