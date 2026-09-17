@@ -191,35 +191,58 @@
   const view=document.querySelector('#view');
   if(view) obs.observe(view,{childList:true,subtree:true});
 
-  /* 런다운 상세 애니메이션 */
+  /* 런다운 상세 애니메이션 - v4.1: 내야 회전 + 외야 백업까지 */
   function rundownHTML(){
     return `<section class="v4-rundown" data-v4-rundown>
-      <h3>🔁 런다운 · 후속 수비수까지 회전하기</h3>
-      <div class="lead">아래 예시는 2루↔3루 런다운입니다. 공 가진 야수가 주자를 몰고, 늦게 송구하고, 송구한 야수는 플레이 선에서 빠져 송구 방향의 후방 대열로 합류합니다. 팀마다 회전 약속은 다를 수 있습니다.</div>
-      <div class="v4-rundown-status" data-rd-status>BEFORE · 3B가 공을 들고 주자와 거리를 줄입니다.</div>
-      <div class="v4-rundown-board"><svg viewBox="0 0 100 100" aria-label="2루와 3루 사이 런다운 애니메이션">
+      <h3>🔁 런다운 · 후속 수비수와 외야 백업까지</h3>
+      <div class="lead">아래 예시는 <b>2루↔3루 런다운</b>입니다. 런다운 선 안에서는 2명의 야수가 공간을 줄이고, 다음 내야수들이 양 끝의 대기열을 계속 채웁니다. 외야수는 모두 공 쪽으로 몰려드는 것이 아니라 <b>송구가 빠지는 쪽의 깊은 백업</b>을 맡습니다.</div>
+      <div class="v4-rundown-status" data-rd-status>BEFORE · 3B가 공을 들고 있고, SS가 2루 쪽에서 받을 준비를 합니다.</div>
+      <div class="v4-rundown-board"><svg viewBox="0 0 100 100" aria-label="2루와 3루 사이 런다운 전체 수비 회전 애니메이션">
         <rect width="100" height="100" fill="#eef3e9"/>
         <path d="M50 88 L4 47 Q12 2 50 .8 Q88 2 96 47 L50 88" fill="#d7e5cf" stroke="#b8cbb3" stroke-width="1"/>
         <path d="M50 84 26 58 50 35 74 58Z" fill="#ead9b3" stroke="#c9b58c" stroke-width=".8"/>
         <path d="M50 84 L3.5 44 M50 84 L96.5 44" stroke="#fff" stroke-width="1"/>
-        <rect x="47.5" y="32.5" width="5" height="5" transform="rotate(45 50 35)" fill="#fff"/>
-        <rect x="23.5" y="55.5" width="5" height="5" transform="rotate(45 26 58)" fill="#fff"/>
-        <path d="M28 57 Q37 50 48 37" fill="none" stroke="#3d6eb4" stroke-width="2.2" stroke-dasharray="4 2" opacity=".25"/>
+        <rect x="47.5" y="32.5" width="5" height="5" transform="rotate(45 50 35)" fill="#fff" stroke="#9da39c" stroke-width=".35"/>
+        <rect x="23.5" y="55.5" width="5" height="5" transform="rotate(45 26 58)" fill="#fff" stroke="#9da39c" stroke-width=".35"/>
+
+        <path d="M27 57 Q37 49 48 37" fill="none" stroke="#3d6eb4" stroke-width="1.7" stroke-dasharray="3 2" opacity=".24"/>
+        <path d="M16 18 Q14 34 17 48" fill="none" stroke="#7a9b88" stroke-width="1.15" stroke-dasharray="2 2" opacity=".36"/>
+        <path d="M50 7 Q50 15 50 23" fill="none" stroke="#7a9b88" stroke-width="1.15" stroke-dasharray="2 2" opacity=".36"/>
+        <path d="M84 18 Q82 22 77 26" fill="none" stroke="#7a9b88" stroke-width="1.05" stroke-dasharray="2 2" opacity=".24"/>
+
+        <text x="10" y="46" font-size="2.35" font-weight="900" fill="#4e6d5c">3B SIDE BACKUP</text>
+        <text x="50" y="20" text-anchor="middle" font-size="2.35" font-weight="900" fill="#4e6d5c">2B SIDE BACKUP</text>
+
         <g data-rd-player="3B" transform="translate(27 57)"><circle r="4.1" fill="#0d3328"/><text y="1.2" text-anchor="middle" font-size="3" font-weight="900" fill="#fff">3B</text></g>
         <g data-rd-player="SS" transform="translate(47 38)"><circle r="4.1" fill="#0d3328"/><text y="1.2" text-anchor="middle" font-size="3" font-weight="900" fill="#fff">SS</text></g>
-        <g data-rd-player="2B" transform="translate(56 31)"><circle r="3.5" fill="#fff" stroke="#0d3328" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.6" font-weight="900" fill="#0d3328">2B</text></g>
-        <g data-rd-player="P" transform="translate(21 64)"><circle r="3.5" fill="#fff" stroke="#0d3328" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.6" font-weight="900" fill="#0d3328">P</text></g>
+        <g data-rd-player="2B" transform="translate(58 30)"><circle r="3.6" fill="#fff" stroke="#0d3328" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.6" font-weight="900" fill="#0d3328">2B</text></g>
+        <g data-rd-player="P" transform="translate(42 64)"><circle r="3.6" fill="#fff" stroke="#0d3328" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.6" font-weight="900" fill="#0d3328">P</text></g>
+
+        <g data-rd-player="LF" transform="translate(16 18)"><circle r="3.4" fill="#fff" stroke="#4e6d5c" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.55" font-weight="900" fill="#355445">LF</text></g>
+        <g data-rd-player="CF" transform="translate(50 7)"><circle r="3.4" fill="#fff" stroke="#4e6d5c" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.55" font-weight="900" fill="#355445">CF</text></g>
+        <g data-rd-player="RF" transform="translate(84 18)"><circle r="3.4" fill="#fff" stroke="#879b90" stroke-width="1"/><text y="1.1" text-anchor="middle" font-size="2.55" font-weight="900" fill="#5e7468">RF</text></g>
+
         <g data-rd-runner transform="translate(34 52)"><circle r="3.8" fill="#d87b2b"/><text y="1.1" text-anchor="middle" font-size="2.7" font-weight="900" fill="#fff">R2</text></g>
         <g data-rd-ball transform="translate(27 57)"><circle r="1.8" fill="#fff" stroke="#c84a3d" stroke-width=".9"/></g>
       </svg></div>
-      <div class="v4-rundown-controls"><button class="primary" data-rd-action="play">▶ 천천히 재생</button><button data-rd-action="reset">↻ 처음부터</button></div>
+
+      <div class="v4-rundown-controls"><button class="primary" data-rd-action="play">▶ 천천히 전체 회전 보기</button><button data-rd-action="reset">↻ 처음부터</button></div>
+
       <div class="v4-rundown-steps">
-        <div class="v4-rundown-step"><b>1 · DRIVE</b>공 가진 야수가 주자를 향해 달려 방향을 확실히 만들기.</div>
-        <div class="v4-rundown-step"><b>2 · LATE THROW</b>받는 야수가 움직이며 콜할 때 짧고 정확하게 송구.</div>
-        <div class="v4-rundown-step"><b>3 · ROTATE</b>던진 야수는 옆으로 빠져 송구 방향 후방 대열에 합류.</div>
-        <div class="v4-rundown-step"><b>4 · FINISH</b>새 공 보유자가 다시 몰고, 거리가 좁아지면 더 던지지 말고 태그.</div>
+        <div class="v4-rundown-step"><b>0 · BACKUP SET</b>LF는 3루 뒤, CF는 2루 뒤로 들어와 악송구가 빠질 공간을 먼저 막습니다. RF는 반대편과 다른 주자를 보며 과도하게 몰려들지 않습니다.</div>
+        <div class="v4-rundown-step"><b>1 · DRIVE</b>공 가진 3B가 R2를 2루 방향으로 몰아 거리를 줄입니다.</div>
+        <div class="v4-rundown-step"><b>2 · THROW + FOLLOW</b>SS가 받을 수 있을 때 늦게 송구하고, 3B는 송구 후 정지하지 않고 2루 쪽 후방 대열로 이동합니다.</div>
+        <div class="v4-rundown-step"><b>3 · NEXT MAN</b>SS가 다시 주자를 3루 쪽으로 몰면 P가 3루 쪽 다음 수비수로 올라오고 LF는 그 뒤에서 악송구를 백업합니다.</div>
+        <div class="v4-rundown-step"><b>4 · KEEP ROTATING</b>P가 다시 2루 쪽으로 몰면 2B가 다음 수비수로 올라옵니다. CF는 2루 뒤에 남아 송구가 빠지는 것을 막습니다.</div>
+        <div class="v4-rundown-step"><b>5 · FINISH</b>태그 거리가 되면 더 던지지 않고 끝냅니다. 못 잡았으면 같은 원리로 다음 야수가 앞자리를 채웁니다.</div>
       </div>
-      <div class="sim-caution">핵심은 송구 횟수가 아니라 공간을 줄이는 것입니다. 가능하면 0~2번의 송구 안에 끝내고, 3루↔홈에서는 실점을 막기 위해 주자를 3루 쪽으로 돌려보내는 팀 원칙을 둘 수 있습니다.</div>
+
+      <div class="v4-rundown-outfield">
+        <div><b>LF</b><span>2↔3루 런다운에서는 3루 뒤의 가장 중요한 외야 백업. 송구가 3루 뒤로 빠지는 것을 막습니다.</span></div>
+        <div><b>CF</b><span>2루 뒤 깊은 백업. 2루 쪽 송구가 빠지거나 런다운이 길어질 때 안전망이 됩니다.</span></div>
+        <div><b>RF</b><span>모두 런다운 선으로 들어가지 않습니다. 반대편 베이스·다른 주자·추가 악송구를 보며 뒤쪽을 지킵니다.</span></div>
+      </div>
+      <div class="sim-caution"><b>중요:</b> 외야수는 보통 런다운의 1차 추격자가 아니라 <b>베이스 뒤의 깊은 백업</b>입니다. 다른 주자가 있으면 그 주자를 막는 역할이 더 우선될 수 있습니다. 팀마다 회전 담당은 달라질 수 있지만, ‘앞의 두 명이 주자를 압박하고 뒤의 야수들이 양 끝을 계속 채운다’는 원칙은 유지하세요.</div>
     </section>`;
   }
 
@@ -249,28 +272,88 @@
     });
   }
   const rdWait=ms=>new Promise(r=>setTimeout(r,ms));
+
   function rdReset(root){
-    rdSet(root.querySelector('[data-rd-player="3B"]'),27,57);rdSet(root.querySelector('[data-rd-player="SS"]'),47,38);
-    rdSet(root.querySelector('[data-rd-player="2B"]'),56,31);rdSet(root.querySelector('[data-rd-player="P"]'),21,64);
-    rdSet(root.querySelector('[data-rd-runner]'),34,52);rdSet(root.querySelector('[data-rd-ball]'),27,57);
-    root.querySelector('[data-rd-status]').textContent='BEFORE · 3B가 공을 들고 주자와 거리를 줄입니다.';
+    rdSet(root.querySelector('[data-rd-player="3B"]'),27,57);
+    rdSet(root.querySelector('[data-rd-player="SS"]'),47,38);
+    rdSet(root.querySelector('[data-rd-player="2B"]'),58,30);
+    rdSet(root.querySelector('[data-rd-player="P"]'),42,64);
+    rdSet(root.querySelector('[data-rd-player="LF"]'),16,18);
+    rdSet(root.querySelector('[data-rd-player="CF"]'),50,7);
+    rdSet(root.querySelector('[data-rd-player="RF"]'),84,18);
+    rdSet(root.querySelector('[data-rd-runner]'),34,52);
+    rdSet(root.querySelector('[data-rd-ball]'),27,57);
+    root.querySelector('[data-rd-status]').textContent='BEFORE · 3B가 공을 들고 있고, SS가 2루 쪽에서 받을 준비를 합니다.';
     root.dataset.running='0';
   }
+
   async function rdPlay(root){
-    if(root.dataset.running==='1')return; root.dataset.running='1';
-    const p3=root.querySelector('[data-rd-player="3B"]'), ss=root.querySelector('[data-rd-player="SS"]'), p2=root.querySelector('[data-rd-player="2B"]'), p=root.querySelector('[data-rd-player="P"]'), r=root.querySelector('[data-rd-runner]'), ball=root.querySelector('[data-rd-ball]'), st=root.querySelector('[data-rd-status]');
-    rdReset(root);root.dataset.running='1'; await rdWait(900);
+    if(root.dataset.running==='1')return;
+    root.dataset.running='1';
+    const p3=root.querySelector('[data-rd-player="3B"]');
+    const ss=root.querySelector('[data-rd-player="SS"]');
+    const p2=root.querySelector('[data-rd-player="2B"]');
+    const p=root.querySelector('[data-rd-player="P"]');
+    const lf=root.querySelector('[data-rd-player="LF"]');
+    const cf=root.querySelector('[data-rd-player="CF"]');
+    const rf=root.querySelector('[data-rd-player="RF"]');
+    const r=root.querySelector('[data-rd-runner]');
+    const ball=root.querySelector('[data-rd-ball]');
+    const st=root.querySelector('[data-rd-status]');
+
+    rdReset(root); root.dataset.running='1'; await rdWait(700);
+
+    st.textContent='STEP 0 · BACKUP SET — LF는 3루 뒤, CF는 2루 뒤로 들어가고 P·2B가 다음 회전을 준비합니다.';
+    await Promise.all([
+      rdTween(lf,[16,18],[16,49],2100),
+      rdTween(cf,[50,7],[50,22],2100),
+      rdTween(rf,[84,18],[78,26],1900),
+      rdTween(p,[42,64],[22,63],1900),
+      rdTween(p2,[58,30],[56,31],1500)
+    ]); await rdWait(650);
+
     st.textContent='STEP 1 · DRIVE — 3B가 공을 들고 R2를 2루 쪽으로 몰아갑니다.';
-    await Promise.all([rdTween(p3,[27,57],[36,49],2300),rdTween(ball,[27,57],[36,49],2300),rdTween(r,[34,52],[43,42],2300)]); await rdWait(650);
-    st.textContent='STEP 2 · THROW — SS가 움직이며 공을 요구하고, 3B가 늦게 송구합니다.';
+    await Promise.all([
+      rdTween(p3,[27,57],[36,49],2300),
+      rdTween(ball,[27,57],[36,49],2300),
+      rdTween(r,[34,52],[43,42],2300)
+    ]); await rdWait(650);
+
+    st.textContent='STEP 2 · THROW — SS가 받을 수 있을 때 3B가 늦게 송구합니다.';
     await rdTween(ball,[36,49],[47,38],1500); await rdWait(450);
-    st.textContent='STEP 3 · ROTATE — 3B는 옆으로 빠져 2루 쪽 후방 대열로 들어가고 SS가 새 추격자가 됩니다.';
-    await Promise.all([rdTween(p3,[36,49],[56,33],2200),rdTween(ss,[47,38],[39,47],2200),rdTween(ball,[47,38],[39,47],2200),rdTween(r,[43,42],[31,55],2200)]); await rdWait(650);
-    st.textContent='STEP 4 · NEXT — 3루 쪽 후속 수비수 P가 앞으로 들어오고 SS가 다시 늦게 송구합니다.';
-    await Promise.all([rdTween(p,[21,64],[28,57],1400),rdTween(p2,[56,31],[50,35],1400)]); await rdWait(400); await rdTween(ball,[39,47],[28,57],1400); await rdWait(450);
-    st.textContent='STEP 5 · FINISH — P가 공을 잡고 거리를 줄입니다. 태그 거리가 되면 더 던지지 않습니다.';
-    await Promise.all([rdTween(p,[28,57],[31,54],1700),rdTween(ball,[28,57],[31,54],1700),rdTween(r,[31,55],[30,55],1300),rdTween(ss,[39,47],[23,62],1800)]); await rdWait(1100);
-    st.textContent='완료 · CHASE → COMMIT → THROW → ROTATE → TAG. 송구보다 공간 압축이 먼저입니다.'; root.dataset.running='0';
+
+    st.textContent='STEP 3 · ROTATE — 3B는 송구 후 2루 쪽 후방 대열로, SS는 새 추격자로. P는 3루 쪽 다음 수비수로 올라옵니다.';
+    await Promise.all([
+      rdTween(p3,[36,49],[58,29],2200),
+      rdTween(ss,[47,38],[39,47],2200),
+      rdTween(ball,[47,38],[39,47],2200),
+      rdTween(r,[43,42],[31,55],2200),
+      rdTween(p,[22,63],[27,58],1800)
+    ]); await rdWait(700);
+
+    st.textContent='STEP 4 · NEXT THROW — SS가 다시 늦게 P에게 송구. LF는 3루 뒤에서 그대로 안전망 역할을 합니다.';
+    await rdTween(ball,[39,47],[27,58],1450); await rdWait(450);
+
+    st.textContent='STEP 5 · KEEP ROTATING — P가 R2를 다시 2루 쪽으로 몰고, 2B가 다음 수비수로 2루 베이스에 올라옵니다.';
+    await Promise.all([
+      rdTween(p,[27,58],[37,49],2200),
+      rdTween(ball,[27,58],[37,49],2200),
+      rdTween(r,[31,55],[44,41],2200),
+      rdTween(p2,[56,31],[50,35],1500),
+      rdTween(ss,[39,47],[21,62],1900)
+    ]); await rdWait(650);
+
+    st.textContent='STEP 6 · THIRD DEFENDER — P가 2B에게 송구. CF는 2루 뒤에서 악송구를 막고, P는 송구 후 다시 후방 대열로 갑니다.';
+    await rdTween(ball,[37,49],[50,35],1450); await rdWait(350);
+    await Promise.all([
+      rdTween(p,[37,49],[58,29],1900),
+      rdTween(p2,[50,35],[45,41],1700),
+      rdTween(ball,[50,35],[45,41],1700),
+      rdTween(r,[44,41],[45.5,42],1300)
+    ]); await rdWait(950);
+
+    st.textContent='완료 · 3B → SS → P → 2B처럼 앞자리를 계속 교대합니다. LF·CF는 뒤에서 악송구를 막고, RF는 반대편과 다른 주자를 지킵니다.';
+    root.dataset.running='0';
   }
 
   document.addEventListener('click',e=>{

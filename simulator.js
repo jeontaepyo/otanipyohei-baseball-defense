@@ -478,10 +478,10 @@
 
   function markerDefs(uid) {
     return `<defs>
-      <marker id="simB-${uid}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#3d6eb4"/></marker>
-      <marker id="simG-${uid}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#39895c"/></marker>
-      <marker id="simO-${uid}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#d87b2b"/></marker>
-      <marker id="simR-${uid}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#c84a3d"/></marker>
+      <marker id="simB-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#3d6eb4"/></marker>
+      <marker id="simG-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#39895c"/></marker>
+      <marker id="simO-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#d87b2b"/></marker>
+      <marker id="simR-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#c84a3d"/></marker>
     </defs>`;
   }
 

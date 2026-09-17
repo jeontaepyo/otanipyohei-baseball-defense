@@ -1,4 +1,4 @@
-const CACHE='otanipyohei-defense-v04';
+const CACHE='otanipyohei-defense-v05';
 const ASSETS=[
   './','./index.html','./styles.css','./simulator.css','./v4.css','./app.js','./simulator.js','./v4.js','./manifest.webmanifest','./icon.svg'
 ];

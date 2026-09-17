@@ -114,3 +114,11 @@
   .view{padding-left:22px;padding-right:22px}
   .sim-field{min-height:660px}
 }
+
+/* v4.1 rundown: 외야 백업과 후속 회전 */
+.v4-rundown-steps{grid-template-columns:repeat(3,1fr)}
+.v4-rundown-outfield{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.v4-rundown-outfield>div{background:#eef5f0;border:1px solid #d7e6dc;border-radius:14px;padding:11px 12px;line-height:1.5}
+.v4-rundown-outfield b{display:block;font-size:13px;font-weight:950;color:var(--green);margin-bottom:3px}
+.v4-rundown-outfield span{display:block;font-size:11px;font-weight:720;color:var(--muted)}
+@media(max-width:620px){.v4-rundown-steps{grid-template-columns:repeat(2,1fr)}.v4-rundown-outfield{grid-template-columns:1fr}.v4-rundown-board svg{min-height:390px}}
