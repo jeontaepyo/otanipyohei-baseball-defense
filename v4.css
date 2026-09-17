@@ -206,3 +206,22 @@
   .v43-deep-head{display:block}.v43-deep-head em{display:inline-block;margin-top:7px}
   .v43-learn-section{grid-template-columns:38px 1fr;padding:13px}.v43-learn-num{width:34px;height:34px;border-radius:11px;font-size:10px}.v43-learn-body h3{font-size:16px}.v43-learn-body p{font-size:13px}.v43-learn-body li{font-size:12px}
 }
+/* ==============================
+   iPhone 홈화면 앱 Safe Area 수정
+   ============================== */
+
+.topbar{
+  top:0;
+  padding:
+    calc(10px + env(safe-area-inset-top))
+    12px
+    9px;
+}
+
+/* 홈화면에 추가한 앱에서도 버튼을 안전영역 아래에 배치 */
+@media (display-mode: standalone){
+  .topbar{
+    padding-top:calc(10px + env(safe-area-inset-top));
+    padding-bottom:9px;
+  }
+}
