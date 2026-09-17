@@ -1,0 +1,245 @@
+/* v5 - 상황 시뮬레이터 / 움직임 강조 */
+
+/* 전술판을 페이지의 주인공으로 */
+.sim-board-card{
+  border-radius:24px;
+  padding:10px;
+}
+.sim-field-wrap{
+  max-width:760px;
+  border-radius:20px;
+}
+.sim-field{
+  width:100%;
+  height:auto;
+}
+
+/* 이동 중 야수가 가장 먼저 보이게 */
+.sim-pawn.fielder.is-moving .pawn-head,
+.sim-pawn.fielder.is-moving .pawn-body{
+  fill:#0d3328;
+  stroke:#f0c75e;
+  stroke-width:1.45;
+  filter:drop-shadow(0 0 2.4px rgba(240,199,94,.95));
+}
+.sim-pawn.fielder.is-moving .pawn-label{
+  fill:#fff;
+  font-size:3.25px;
+}
+.sim-pawn.fielder.just-arrived .pawn-head,
+.sim-pawn.fielder.just-arrived .pawn-body{
+  stroke:#f0c75e;
+  stroke-width:1.55;
+  filter:drop-shadow(0 0 2px rgba(240,199,94,.8));
+}
+.sim-pawn.runner.is-moving .pawn-head,
+.sim-pawn.runner.is-moving .pawn-body{
+  filter:drop-shadow(0 0 2.2px rgba(216,123,43,.9));
+}
+.sim-ball.is-moving{
+  filter:drop-shadow(0 0 3px rgba(200,74,61,.95));
+}
+.sim-pawn .pawn-label{
+  font-size:3.05px;
+  font-weight:950;
+}
+.sim-pawn.is-muted{opacity:.42}
+
+/* 이동선: 현재 경로는 강하게, 지나간 경로는 학습 흔적으로 남김 */
+.sim-field .sim-route{opacity:.07;stroke-linecap:round}
+.sim-field .sim-route.is-live{opacity:.96;stroke-width:1.05}
+.sim-field .sim-route.is-done{opacity:.60;stroke-width:.74}
+.sim-field .sim-player-route.is-live{stroke-width:1.22}
+.sim-field .sim-throw-route.is-live{opacity:1;stroke-width:1.24}
+.sim-field .sim-runner-route.is-live{opacity:.95;stroke-width:1.04}
+.sim-field .sim-ball-route.is-live{opacity:.96;stroke-width:1.08}
+
+/* 진행 단계 */
+.sim-phasebar span.done{
+  background:#e6efe9;
+  color:#426454;
+}
+.sim-phasebar span.active{
+  box-shadow:0 0 0 2px rgba(13,51,40,.10) inset;
+}
+
+/* 이번 플레이의 핵심을 전술도 바로 위에 */
+.v5-key-message{
+  margin:12px 0 10px;
+  padding:13px 14px;
+  border:1px solid #cddfd3;
+  border-left:4px solid #0d3328;
+  border-radius:16px;
+  background:#f4f8f5;
+}
+.v5-key-message span{
+  display:block;
+  margin-bottom:4px;
+  color:#426454;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+.v5-key-message b{
+  display:block;
+  color:#0d3328;
+  font-size:13px;
+  line-height:1.48;
+}
+.v5-key-message small{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.5;
+}
+
+/* 자주 나오는 상황 */
+.v5-quick-presets{
+  margin:0 0 12px;
+  padding:11px 12px;
+  border:1px solid #dbe6df;
+  border-radius:17px;
+  background:#f8faf8;
+}
+.v5-quick-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+}
+.v5-quick-title b{font-size:12px;color:#0d3328}
+.v5-quick-title span{font-size:9px;color:var(--muted);font-weight:700}
+.v5-quick-scroll{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:2px;
+}
+.v5-quick-scroll::-webkit-scrollbar{display:none}
+.v5-quick-scroll button{
+  flex:0 0 auto;
+  border:1px solid #cbd9d0;
+  background:#fff;
+  border-radius:999px;
+  padding:8px 11px;
+  color:#0d3328;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* 상황 화면은 4개 핵심 선택을 먼저, 나머지는 고급설정 */
+.v5-advanced{
+  border:1px dashed #ccd8d0;
+  border-radius:15px;
+  background:#fbfcfb;
+  overflow:hidden;
+}
+.v5-advanced summary{
+  cursor:pointer;
+  list-style:none;
+  padding:11px 12px;
+  color:#365948;
+  font-size:10px;
+  font-weight:900;
+}
+.v5-advanced summary::-webkit-details-marker{display:none}
+.v5-advanced[open] summary{border-bottom:1px solid #e2e8e4}
+.v5-advanced-body{display:grid;gap:10px;padding:10px}
+.v5-advanced-body .sim-control-block{margin:0;box-shadow:none}
+
+/* 전술판 바로 위 포지션 집중 */
+.v5-focusbar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 1px 9px;
+  padding:7px 0 2px;
+  overflow:hidden;
+}
+.v5-focusbar>span{
+  flex:0 0 auto;
+  color:#526c5f;
+  font-size:9px;
+  font-weight:900;
+}
+.v5-focusbar>div{
+  display:flex;
+  gap:5px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.v5-focusbar>div::-webkit-scrollbar{display:none}
+.v5-focusbar button{
+  flex:0 0 auto;
+  border:1px solid #cedbd3;
+  background:#fff;
+  border-radius:999px;
+  padding:6px 8px;
+  color:#365948;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+.v5-focusbar button.active{
+  background:#0d3328;
+  color:#fff;
+  border-color:#0d3328;
+}
+
+.v5-rep-badge{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:6px 8px;
+  background:#eef4ef;
+  border:1px solid #ceddd3;
+  color:#365948;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+/* 크게보기는 진짜 전술판 중심 화면 */
+.sim-board-card.is-expanded .sim-field-wrap{
+  width:min(96vw,820px);
+  max-width:820px;
+}
+.sim-board-card.is-expanded .sim-field{
+  width:100%;
+}
+
+@media (max-width:520px){
+  .sim-board-card{
+    margin-left:-12px;
+    margin-right:-12px;
+    border-left:0;
+    border-right:0;
+    border-radius:18px;
+    padding:8px;
+  }
+  .sim-field-wrap{
+    border-radius:15px;
+  }
+  .sim-board-title b{font-size:15px}
+  .sim-status{padding:9px}
+  .sim-pawn .pawn-label{font-size:3.2px}
+  .v5-key-message{margin-left:-3px;margin-right:-3px}
+}
+
+@media (min-width:700px){
+  .sim-board-card{padding:14px}
+  .v5-key-message b{font-size:14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sim-pawn.fielder.is-moving .pawn-head,
+  .sim-pawn.fielder.is-moving .pawn-body,
+  .sim-pawn.fielder.just-arrived .pawn-head,
+  .sim-pawn.fielder.just-arrived .pawn-body{
+    filter:none;
+  }
+}

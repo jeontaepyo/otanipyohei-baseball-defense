@@ -1,6 +1,6 @@
-const CACHE='otanipyohei-defense-v07';
+const CACHE='otanipyohei-defense-v08';
 const ASSETS=[
-  './','./index.html','./styles.css','./simulator.css','./v4.css','./app.js','./simulator.js','./v4.js','./manifest.webmanifest','./icon.svg'
+  './','./index.html','./styles.css','./simulator.css','./v4.css','./v5.css','./app.js','./simulator.js','./v4.js','./v5.js','./manifest.webmanifest','./icon.svg'
 ];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));self.clients.claim();});
