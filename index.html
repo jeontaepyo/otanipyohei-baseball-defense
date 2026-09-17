@@ -11,12 +11,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="오태니표헤이 수비" />
-
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="simulator.css" />
-
+  <link rel="stylesheet" href="v4.css" />
   <title>오태니표헤이의 사회인야구 수비의 디테일</title>
 </head>
 <body>
@@ -30,9 +29,7 @@
       </div>
       <button class="icon-btn" id="searchBtn" aria-label="검색">⌕</button>
     </header>
-
     <main id="view" class="view"></main>
-
     <nav class="bottom-nav" aria-label="하단 메뉴">
       <button data-route="home">⌂<span>홈</span></button>
       <button data-route="positions">⚾<span>포지션</span></button>
@@ -41,7 +38,6 @@
       <button data-route="favorites">☆<span>저장</span></button>
     </nav>
   </div>
-
   <dialog id="searchDialog" class="search-dialog">
     <form method="dialog" class="search-head">
       <input id="searchInput" type="search" placeholder="예: R1 유격수 땅볼, R2 좌전안타, 번트, 컷오프" autocomplete="off" />
@@ -49,53 +45,13 @@
     </form>
     <div id="searchResults" class="search-results"></div>
   </dialog>
-
-  <!-- 원래 콘텐츠/데이터 -->
   <script src="app.js"></script>
-
-  <!-- 상황·포지션 애니메이션 시뮬레이터 -->
   <script src="simulator.js"></script>
-
-  <!-- GoatCounter 방문 통계 -->
-  <script
-    data-goatcounter="https://teph.goatcounter.com/count"
-    async
-    src="https://gc.zgo.at/count.js">
-  </script>
-
-  <div
-    id="visitorCounter"
-    style="
-      position:fixed;
-      right:12px;
-      bottom:82px;
-      z-index:9999;
-      background:rgba(13,51,40,.92);
-      color:#fff;
-      padding:7px 11px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:800;
-      box-shadow:0 4px 14px rgba(0,0,0,.16);
-      white-space:nowrap;
-      pointer-events:none;
-    "
-  >⚾ 방문 집계 중…</div>
-
+  <script src="v4.js"></script>
+  <script data-goatcounter="https://teph.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <div id="visitorCounter" style="position:fixed;right:12px;bottom:88px;z-index:9999;background:rgba(13,51,40,.92);color:#fff;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900;box-shadow:0 4px 14px rgba(0,0,0,.16);white-space:nowrap;pointer-events:none">⚾ 방문 집계 중…</div>
   <script>
-    fetch('https://teph.goatcounter.com/counter/TOTAL.json')
-      .then(r => {
-        if (!r.ok) throw new Error('counter error');
-        return r.json();
-      })
-      .then(data => {
-        if (data && data.count !== undefined) {
-          document.getElementById('visitorCounter').textContent = `⚾ 누적 방문 ${data.count}`;
-        }
-      })
-      .catch(() => {
-        document.getElementById('visitorCounter').textContent = '⚾ 방문 집계 중';
-      });
+    fetch('https://teph.goatcounter.com/counter/TOTAL.json').then(r=>{if(!r.ok)throw new Error();return r.json()}).then(data=>{if(data&&data.count!==undefined)document.getElementById('visitorCounter').textContent=`⚾ 누적 방문 ${data.count}`}).catch(()=>{document.getElementById('visitorCounter').textContent='⚾ 방문 집계 중'});
   </script>
 </body>
 </html>

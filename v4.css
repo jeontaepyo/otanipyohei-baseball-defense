@@ -1,0 +1,116 @@
+/* 오태니표헤이 수비 시뮬레이터 v4 UI / Field Upgrade */
+
+/* 전체 가독성 */
+:root{font-size:16px}
+.app-shell{max-width:900px}
+.bottom-nav{width:min(900px,100%)}
+.view{padding-left:16px;padding-right:16px}
+.brand{font-size:17px;font-weight:900}
+.brand-mini{font-size:12px;font-weight:800}
+.crumb{font-size:11px;font-weight:700}
+.icon-btn{width:46px;height:46px;font-size:28px;font-weight:900}
+.hero h1{font-size:32px;font-weight:950}
+.hero h2{font-size:27px;font-weight:950}
+.hero .lead{font-size:15px;font-weight:650;line-height:1.65}
+.section-title{font-size:19px;font-weight:950}
+.section-sub,.sub,.small{font-size:13px;line-height:1.6}
+.nav-card strong,.quick-item b,.topic-card b{font-size:16px;font-weight:900}
+.content-card h3{font-size:20px;font-weight:950}
+.content-card p,.content-card li,.step>div{font-size:15px;line-height:1.72}
+.action-btn{font-size:13px;padding:11px 14px;font-weight:900}
+
+/* 하단 네비게이션 */
+.bottom-nav{padding-top:10px}
+.bottom-nav button{font-size:24px;font-weight:900;padding:7px 3px;gap:4px}
+.bottom-nav button span{font-size:11px;font-weight:900}
+
+/* 홈 사용법 */
+.v4-howto{margin:14px 0 18px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:var(--shadow)}
+.v4-howto h3{margin:0 0 5px;font-size:18px;font-weight:950}
+.v4-howto>p{margin:0 0 13px;color:var(--muted);font-size:13px;line-height:1.6}
+.v4-howto-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.v4-howto-step{border-radius:15px;background:#f3f7f4;padding:12px 10px;min-height:108px}
+.v4-howto-step b{display:block;font-size:13px;font-weight:950;color:var(--green);margin-bottom:5px}
+.v4-howto-step span{display:block;font-size:12px;line-height:1.55;color:var(--muted);font-weight:650}
+.v4-howto-step .num{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-size:11px;margin-bottom:8px}
+
+/* 기본 수비 위치 상세 */
+.v4-position-guide{margin:14px 0 18px;background:#fff;border:1px solid var(--line);border-radius:21px;padding:17px;box-shadow:var(--shadow)}
+.v4-position-guide-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:11px}
+.v4-position-guide-head h3{margin:0;font-size:18px;font-weight:950}
+.v4-position-guide-head span{font-size:10px;font-weight:900;color:var(--green);background:#e8f0eb;border-radius:999px;padding:6px 8px;white-space:nowrap}
+.v4-position-guide .where{font-size:15px;font-weight:900;line-height:1.6;margin-bottom:7px}
+.v4-position-guide .why{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:10px}
+.v4-position-guide ul{margin:8px 0 0;padding-left:20px}
+.v4-position-guide li{font-size:13px;line-height:1.65;margin:5px 0}
+.v4-position-guide .note{margin-top:11px;padding:11px 12px;border-radius:13px;background:#fff7df;font-size:12px;line-height:1.6;color:#6c5318;font-weight:700}
+
+/* 시뮬레이터 읽기성 */
+.sim-intro{font-size:13px;font-weight:650}
+.sim-control-label{font-size:13px}
+.sim-control-help{font-size:10px}
+.sim-chip{font-size:12px;padding:9px 13px;font-weight:900}
+.sim-board-card{padding:14px;border-radius:24px}
+.sim-board-title b{font-size:19px;font-weight:950}
+.sim-board-title span{font-size:12px;line-height:1.5;font-weight:650}
+.sim-mini-btn{font-size:12px;padding:8px 11px}
+.sim-status{padding:12px 13px;border-radius:16px}
+.sim-status-main{font-size:14px;font-weight:950}
+.sim-status-sub{font-size:12px;line-height:1.55}
+.sim-status-badge{font-size:10px;padding:7px 9px}
+
+/* 전술판을 최대한 크게 */
+.sim-field-wrap{max-width:none;width:100%;border-radius:20px}
+.sim-field{width:100%;min-height:520px;overflow:visible}
+.sim-pawn .pawn-label{font-size:3.05px;font-weight:1000}
+.sim-field .sim-player-route{stroke-width:2.15px;stroke-dasharray:4 2}
+.sim-field .sim-runner-route{stroke-width:1.9px}
+.sim-field .sim-ball-route{stroke-width:1.8px}
+.sim-field .sim-throw-route{stroke-width:2.05px}
+.sim-field .sim-route.is-live{opacity:.92}
+.sim-field .sim-player-route.is-live{opacity:1}
+.sim-legend{font-size:12px;font-weight:800;gap:13px}
+.sim-dot{width:11px;height:11px}
+.sim-line{width:23px;height:4px}
+.sim-play-btn{font-size:13px;padding:11px 15px}
+.sim-speed button{font-size:11px;padding:8px 11px}
+.sim-info-card h4{font-size:15px;font-weight:950}
+.sim-info-card p{font-size:13px;line-height:1.65}
+.sim-role{grid-template-columns:48px 1fr;font-size:13px;line-height:1.55}
+.sim-caution{font-size:12px;line-height:1.65}
+
+/* 중계 야수 이동 경로는 특히 잘 보이게 */
+.sim-field .v4-relay-path{stroke:#215f9f!important;stroke-width:2.8px!important;stroke-dasharray:5 2!important}
+.sim-field .v4-relay-path.is-live{opacity:1!important}
+
+/* 런다운 상세 */
+.v4-rundown{margin:14px 0 18px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:15px;box-shadow:var(--shadow)}
+.v4-rundown h3{margin:0 0 5px;font-size:19px;font-weight:950}
+.v4-rundown .lead{font-size:13px;line-height:1.6;color:var(--muted);margin-bottom:12px}
+.v4-rundown-board{background:#eef3e9;border:1px solid #dbe5d7;border-radius:18px;overflow:hidden}
+.v4-rundown-board svg{display:block;width:100%;height:auto;min-height:420px}
+.v4-rundown-status{margin:9px 0 10px;padding:11px 12px;border-radius:14px;background:#f3f7f4;font-size:13px;line-height:1.55;font-weight:850;color:var(--green)}
+.v4-rundown-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.v4-rundown-controls button{border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px 13px;font-size:12px;font-weight:900;cursor:pointer}
+.v4-rundown-controls button.primary{background:var(--green);color:#fff;border-color:var(--green)}
+.v4-rundown-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
+.v4-rundown-step{padding:10px;border-radius:13px;background:#f7f8f5;font-size:11px;line-height:1.5;color:var(--muted)}
+.v4-rundown-step b{display:block;color:var(--green);font-size:12px;margin-bottom:3px}
+
+@media(max-width:600px){
+  .app-shell{max-width:none}
+  .view{padding-left:9px;padding-right:9px}
+  .hero h1{font-size:29px}.hero h2{font-size:25px}
+  .brand{font-size:14px}.brand-mini{font-size:10px}
+  .bottom-nav button{font-size:23px}.bottom-nav button span{font-size:10px}
+  .v4-howto-grid{grid-template-columns:repeat(2,1fr)}
+  .sim-board-card{margin-left:-3px;margin-right:-3px;padding:8px;border-radius:18px}
+  .sim-field{min-height:440px}
+  .sim-board-title b{font-size:17px}
+  .v4-rundown-steps{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(min-width:700px){
+  .view{padding-left:22px;padding-right:22px}
+  .sim-field{min-height:660px}
+}
