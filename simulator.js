@@ -63,6 +63,10 @@
   };
 
   const FOCUS_LABELS = ['ALL', 'C', 'P', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF'];
+  const ZONE_META = {
+    C:{rx:4.2,ry:3.5}, P:{rx:4.8,ry:4.2}, '1B':{rx:6.6,ry:5.4}, '2B':{rx:7.2,ry:6.0},
+    '3B':{rx:6.2,ry:5.3}, SS:{rx:7.4,ry:6.2}, LF:{rx:9.0,ry:7.0}, CF:{rx:10.2,ry:7.6}, RF:{rx:9.0,ry:7.0}
+  };
   let simUid = 0;
   let runSerial = 0;
 
@@ -478,10 +482,10 @@
 
   function markerDefs(uid) {
     return `<defs>
-      <marker id="simB-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#3d6eb4"/></marker>
-      <marker id="simG-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#39895c"/></marker>
-      <marker id="simO-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#d87b2b"/></marker>
-      <marker id="simR-${uid}" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,1 L0,5 L5,3 z" fill="#c84a3d"/></marker>
+      <marker id="simB-${uid}" markerWidth="5.5" markerHeight="5.5" refX="4.7" refY="2.75" orient="auto"><path d="M.6,1.15 L.6,4.35 L4.7,2.75 z" fill="#3d6eb4"/></marker>
+      <marker id="simG-${uid}" markerWidth="5.5" markerHeight="5.5" refX="4.7" refY="2.75" orient="auto"><path d="M.6,1.15 L.6,4.35 L4.7,2.75 z" fill="#39895c"/></marker>
+      <marker id="simO-${uid}" markerWidth="5.5" markerHeight="5.5" refX="4.7" refY="2.75" orient="auto"><path d="M.6,1.15 L.6,4.35 L4.7,2.75 z" fill="#d87b2b"/></marker>
+      <marker id="simR-${uid}" markerWidth="5.5" markerHeight="5.5" refX="4.7" refY="2.75" orient="auto"><path d="M.6,1.15 L.6,4.35 L4.7,2.75 z" fill="#c84a3d"/></marker>
     </defs>`;
   }
 
@@ -498,6 +502,15 @@
       <rect x="23.5" y="55.5" width="5" height="5" transform="rotate(45 26 58)" fill="#fff" stroke="#9da39c" stroke-width=".4"/>
       <path d="M50 84 L9 47 M50 84 L91 47" stroke="#fff" stroke-width=".7" opacity=".8"/>
     `;
+  }
+
+  function zoneSVG(name, coord) {
+    const z = ZONE_META[name];
+    if (!z || !coord) return '';
+    return `<g class="sim-position-zone" data-sim-zone="${name}">
+      <ellipse cx="${coord[0]}" cy="${coord[1]}" rx="${z.rx}" ry="${z.ry}"/>
+      <text x="${coord[0]}" y="${coord[1]-z.ry-1.2}" text-anchor="middle">권장 범위</text>
+    </g>`;
   }
 
   function pawnSVG(name, from, to, involved, focus) {
@@ -550,6 +563,8 @@
     const moveMap = Object.fromEntries(s.moves.map(m => [m.name, m]));
     let out = `<svg class="sim-field sim-scenario-svg" viewBox="0 0 100 100" data-uid="${uid}" aria-label="수비 상황 애니메이션">${markerDefs(uid)}${fieldBaseSVG()}`;
 
+    if (s.focus !== 'ALL' && s.start[s.focus]) out += zoneSVG(s.focus, s.start[s.focus]);
+
     if (s.ball) out += lineSVG(s.ball.from, s.ball.to, 'sim-ball-route', '#c84a3d', 'simR', uid, 'data-sim-ball-path');
     s.moves.forEach((m, i) => { if (m.from[0] !== m.to[0] || m.from[1] !== m.to[1]) out += lineSVG(m.from, m.to, 'sim-player-route', '#3d6eb4', 'simB', uid, `data-sim-player-path="${m.name}" data-path-index="${i}"`); });
     s.runners.forEach((r, i) => { if (r.from[0] !== r.to[0] || r.from[1] !== r.to[1]) out += lineSVG(r.from, r.to, 'sim-runner-route', '#d87b2b', 'simO', uid, `data-sim-runner-path="${r.name}" data-runner-timing="${r.timing || 'contact'}" data-path-index="${i}"`); });
@@ -573,8 +588,46 @@
     return items.map(v => `<button class="sim-chip ${String(v) === String(current) ? 'active' : ''}" data-sim-set="${key}" data-value="${v}">${labels[v]}</button>`).join('');
   }
 
+  function roleType(role='') {
+    if (/중계|컷|릴레이/.test(role)) return ['CUT','cut'];
+    if (/백업|악송구|빠질/.test(role)) return ['BACKUP','backup'];
+    if (/베이스|커버|포스|태그/.test(role)) return ['BASE','base'];
+    if (/타구|처리|포구/.test(role)) return ['BALL','ball'];
+    if (/지키|관리|유지|뒤 주자/.test(role)) return ['STAY','stay'];
+    return ['NEXT','next'];
+  }
+
   function roleHTML(s) {
-    return FOCUS_LABELS.filter(x => x !== 'ALL').map(name => `<div class="sim-role ${s.focus === name ? 'focus' : ''}"><b>${name}</b><span>${s.roles[name]}</span></div>`).join('');
+    return FOCUS_LABELS.filter(x => x !== 'ALL').map(name => {
+      const role=s.roles[name]||''; const [label,cls]=roleType(role);
+      return `<div class="sim-role ${s.focus === name ? 'focus' : ''} role-${cls}"><b>${name}</b><em>${label}</em><span>${role}</span></div>`;
+    }).join('');
+  }
+
+  function failureHTML(s) {
+    let items=[];
+    if (s.kind === 'ground') {
+      items = [
+        '선행주자 아웃 타이밍이 늦으면 병살 욕심을 버리고 가장 확실한 1루 아웃으로 전환합니다.',
+        '송구가 빠지면 첫 실수를 만회하려고 또 던지지 말고 BALL → RUNNER → BASE → NEXT 순서로 리셋합니다.',
+        '공을 처리하지 않은 야수는 플레이가 끝날 때까지 베이스·악송구 백업·다음 송구 위치를 유지합니다.'
+      ];
+    } else if (s.kind === 'single' || s.kind === 'gap') {
+      items = [
+        '목표 베이스에서 주자를 잡기 어렵다면 컷해서 뒤 주자와 타자주자의 추가 진루를 먼저 끊습니다.',
+        '외야 송구가 컷맨을 지나치거나 빠지면 뒤 백업 야수가 즉시 공을 확보하고, 컷맨은 다음 베이스로 RESET합니다.',
+        '첫 송구 뒤가 가장 위험합니다. 반대편 내야수는 공만 보지 말고 비는 베이스를 먼저 채웁니다.'
+      ];
+    } else if (s.kind === 'fly') {
+      items = [
+        '포구 실패 순간 플라이 수비는 끝나고 즉시 안타 수비로 RESET합니다.',
+        '태그업 송구가 늦으면 무리한 홈/3루 승부보다 뒤 주자의 추가 진루를 제한합니다.',
+        '공을 잡지 않은 외야수는 포구 성공 여부가 확정될 때까지 뒤쪽 백업을 유지합니다.'
+      ];
+    } else {
+      items = ['첫 플레이가 깨지면 공을 다시 확보하고 주자·베이스·다음 송구 순서로 즉시 재정렬합니다.'];
+    }
+    return `<div class="sim-failure-card"><h4>플레이가 어긋났다면?</h4><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
   }
 
   function simulatorHTML(opts = {}) {
@@ -610,8 +663,9 @@
           <div class="sim-board-actions"><button class="sim-mini-btn" data-sim-action="expand">⛶ 크게</button></div>
         </div>
         <div class="sim-status" data-sim-status><div><div class="sim-status-main">BEFORE · 투구 전 위치</div><div class="sim-status-sub">재생 전, 각 야수의 시작 위치와 주자 상태를 먼저 확인하세요.</div></div><span class="sim-status-badge">학습 모드</span></div>
+        <div class="sim-phasebar"><span data-phase="before" class="active">BEFORE</span><span data-phase="contact">CONTACT</span><span data-phase="move">MOVE</span><span data-phase="throw">THROW</span><span data-phase="rotate">ROTATE</span><span data-phase="reset">RESET</span></div>
         <div class="sim-field-wrap">${scenarioSVG(s)}</div>
-        <div class="sim-legend"><span><i class="sim-dot fielder"></i>수비수</span><span><i class="sim-dot runner"></i>주자</span><span><i class="sim-dot ball"></i>공</span><span><i class="sim-line throw"></i>송구</span></div>
+        <div class="sim-legend"><span><i class="sim-dot fielder"></i>수비수</span><span><i class="sim-dot runner"></i>주자</span><span><i class="sim-dot ball"></i>공</span><span><i class="sim-line throw"></i>송구</span>${focus !== 'ALL' ? '<span><i class="sim-zone-key"></i>기본 권장 범위</span>' : ''}</div>
         <div class="sim-playbar">
           <button class="sim-play-btn primary" data-sim-action="play">▶ 천천히 재생</button>
           <button class="sim-play-btn" data-sim-action="replay">↻ 처음부터</button>
@@ -623,6 +677,7 @@
         <div class="sim-info-card"><h4>이 상황의 핵심</h4><p><b>${s.headline}</b><br>${s.baseoutDetail}</p><div class="sim-caution">투구 전 위치: ${ALIGN_META[s.alignmentResolved].label} · ${s.alignmentNote}</div>${s.caution ? `<div class="sim-caution">${s.caution}</div>` : ''}</div>
         <div class="sim-info-card"><h4>포지션별 역할</h4><p>움직이지 않는 것도 역할입니다. 선택한 포지션은 노란 말로 강조됩니다.</p><div class="sim-role-list">${roleHTML(s)}</div></div>
       </div>
+      ${failureHTML(s)}
     </section>`;
   }
 
@@ -787,6 +842,12 @@
     box.querySelector('.sim-status-main').textContent = main;
     box.querySelector('.sim-status-sub').textContent = sub;
     if (badge) box.querySelector('.sim-status-badge').textContent = badge;
+    const key = String(main).split(' · ')[0].toLowerCase();
+    const phase = ['before','contact','move','throw','rotate','reset'].includes(key) ? key : '';
+    if (phase) {
+      root.dataset.phase = phase;
+      root.querySelectorAll('.sim-phasebar [data-phase]').forEach(el => el.classList.toggle('active', el.dataset.phase === phase));
+    }
   }
 
   async function animateScenario(root) {
@@ -799,10 +860,10 @@
     const playBtn = root.querySelector('[data-sim-action="play"]');
     if (playBtn) { playBtn.disabled = true; playBtn.textContent = '재생 중…'; }
 
-    status(root, 'BEFORE · 투구 전 위치', '야수의 시작 위치와 주자 상태를 먼저 봅니다.', '1 / 5');
+    status(root, 'BEFORE · 투구 전 위치', '야수의 시작 위치와 주자 상태를 먼저 봅니다.', '1 / 6');
     await wait(1500 * factor, root, runId);
 
-    status(root, 'CONTACT · 타구 발생', '공의 방향을 확인하는 순간 모든 야수가 자기 역할을 시작합니다.', '2 / 5');
+    status(root, 'CONTACT · 타구 발생', '공의 방향을 확인하는 순간 모든 야수가 자기 역할을 시작합니다.', '2 / 6');
     const ball = svg.querySelector('[data-sim-ball]');
     const ballPath = svg.querySelector('[data-sim-ball-path]');
     if (ballPath) ballPath.classList.add('is-live');
@@ -833,13 +894,13 @@
     if (root.dataset.runId !== String(runId)) return;
     svg.querySelectorAll('.sim-route.is-live').forEach(x => { x.classList.remove('is-live'); x.classList.add('is-done'); });
 
-    status(root, 'MOVE · 수비 위치 완성', '포구 선수뿐 아니라 커버·컷·백업 선수의 위치까지 확인합니다.', '3 / 5');
+    status(root, 'MOVE · 수비 위치 완성', '포구 선수뿐 아니라 커버·컷·백업 선수의 위치까지 확인합니다.', '3 / 6');
     await wait(1100 * factor, root, runId);
 
     const afterCatchRunners = [...svg.querySelectorAll('[data-sim-runner][data-runner-timing="afterCatch"]')];
     const throwPaths = [...svg.querySelectorAll('[data-sim-throw-path]')];
 
-    status(root, 'THROW · 송구와 주자 이동', '주자와 공이 동시에 움직일 때 수비수의 연결 위치를 봅니다.', '4 / 5');
+    status(root, 'THROW · 송구와 주자 이동', '주자와 공이 동시에 움직일 때 수비수의 연결 위치를 봅니다.', '4 / 6');
     const afterRunnerPromise = Promise.all(afterCatchRunners.map((el, i) => {
       const path = svg.querySelector(`[data-sim-runner-path="${el.dataset.simRunner}"]`);
       return wait((180 + i * 90) * factor, root, runId).then(ok => {
@@ -874,8 +935,11 @@
     if (root.dataset.runId !== String(runId)) return;
     svg.querySelectorAll('.sim-route.is-live').forEach(x => { x.classList.remove('is-live'); x.classList.add('is-done'); });
 
-    status(root, 'RESET · 최종 위치', '이 플레이가 끝났을 때 내가 어디에 있어야 하는지 2초 동안 확인하세요.', '5 / 5');
-    await wait(2000 * factor, root, runId);
+    status(root, 'ROTATE · 다음 자리 채우기', '공이 떠난 뒤에도 끝이 아닙니다. 베이스·컷·백업·반대편 빈자리를 다시 채우는 역할을 확인하세요.', '5 / 6');
+    await wait(1500 * factor, root, runId);
+
+    status(root, 'RESET · 다음 투구 준비', '최종 위치를 확인하고 다음 타구를 위해 다시 OUT · RUNNER · FORCE를 읽습니다.', '6 / 6');
+    await wait(2200 * factor, root, runId);
 
     if (playBtn && root.dataset.runId === String(runId)) { playBtn.disabled = false; playBtn.textContent = '▶ 천천히 재생'; }
   }
@@ -925,7 +989,8 @@
         path.classList.remove('is-live'); path.classList.add('is-done');
         await wait(240 * factor, card, runId);
       }
-      await wait(1500 * factor, card, runId);
+      status(card, `STEP ${si + 1} · ROTATE / RESET`, '송구 뒤에는 베이스·백업·다음 플레이 위치를 다시 채운 뒤 다음 투구를 준비합니다.', `STEP ${si + 1} / ${stages.length}`);
+      await wait(1700 * factor, card, runId);
     }
 
     if (btn && card.dataset.runId === String(runId)) { btn.disabled = false; btn.textContent = '▶ 천천히 재생'; }
@@ -976,7 +1041,7 @@
         root.dataset.runId = String(++runSerial);
         const svg = root.querySelector('.sim-scenario-svg');
         if (svg) resetSvg(svg);
-        status(root, 'BEFORE · 투구 전 위치', '야수의 시작 위치와 주자 상태를 먼저 봅니다.', '1 / 5');
+        status(root, 'BEFORE · 투구 전 위치', '야수의 시작 위치와 주자 상태를 먼저 봅니다.', '1 / 6');
       }
       if (action.dataset.simAction === 'expand') {
         const board = root.querySelector('[data-sim-board]');

@@ -122,3 +122,87 @@
 .v4-rundown-outfield b{display:block;font-size:13px;font-weight:950;color:var(--green);margin-bottom:3px}
 .v4-rundown-outfield span{display:block;font-size:11px;font-weight:720;color:var(--muted)}
 @media(max-width:620px){.v4-rundown-steps{grid-template-columns:repeat(2,1fr)}.v4-rundown-outfield{grid-template-columns:1fr}.v4-rundown-board svg{min-height:390px}}
+
+/* ==============================
+   v4.2 디테일 업그레이드
+   ============================== */
+
+/* 포지션별 기본 권장 범위 */
+.sim-position-zone ellipse{fill:#f0c75e;fill-opacity:.12;stroke:#d0a72f;stroke-width:.75;stroke-dasharray:2.2 1.6}
+.sim-position-zone text{font-size:2.05px;font-weight:950;fill:#7a5d13;paint-order:stroke;stroke:#fff;stroke-width:.55;stroke-linejoin:round}
+.sim-zone-key{display:inline-block;width:17px;height:10px;border:1.5px dashed #d0a72f;border-radius:50%;background:rgba(240,199,94,.14)}
+
+/* 6단계 공통 수비 문법 */
+.sim-phasebar{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:0 0 10px}
+.sim-phasebar span{padding:6px 2px;border-radius:9px;background:#f0f2ef;color:#81908a;text-align:center;font-size:9px;font-weight:950;letter-spacing:.02em;transition:.18s ease}
+.sim-phasebar span.active{background:var(--green);color:#fff;box-shadow:0 3px 10px rgba(13,51,40,.16);transform:translateY(-1px)}
+.sim-lab[data-phase="rotate"] .sim-role.role-backup,
+.sim-lab[data-phase="rotate"] .sim-role.role-cut,
+.sim-lab[data-phase="rotate"] .sim-role.role-base{background:#eef6f1;border-radius:10px;padding-left:7px;padding-right:7px}
+.sim-lab[data-phase="reset"] .sim-pawn.fielder{filter:drop-shadow(0 0 2px rgba(13,51,40,.35))}
+
+/* 역할을 BALL / BASE / CUT / BACKUP / STAY로 읽기 */
+.sim-role{grid-template-columns:44px 58px 1fr;gap:7px}
+.sim-role em{font-style:normal;font-size:9px;font-weight:950;letter-spacing:.03em;border-radius:999px;padding:3px 6px;text-align:center;align-self:start;background:#eef1ef;color:#5b6c65}
+.sim-role.role-ball em{background:#fbe7e3;color:#a13c31}.sim-role.role-base em{background:#e7eef9;color:#315b94}.sim-role.role-cut em{background:#e5f2e9;color:#2f7650}.sim-role.role-backup em{background:#fff1dc;color:#9a6114}.sim-role.role-stay em{background:#efedf7;color:#62568a}
+
+/* 실패 후 다음 플레이 */
+.sim-failure-card{margin-top:10px;background:#fff;border:1px solid #eadedb;border-radius:17px;padding:14px 15px;box-shadow:0 4px 14px rgba(20,50,40,.035)}
+.sim-failure-card h4{margin:0 0 7px;font-size:15px;font-weight:950;color:#8d3f36}
+.sim-failure-card ul{margin:0;padding-left:19px}.sim-failure-card li{font-size:12px;line-height:1.65;margin:5px 0;color:#5f6763;font-weight:650}
+
+/* 런다운 완전판 */
+.v42-rundown .rd-mode-tabs{display:flex;gap:7px;overflow-x:auto;margin:10px 0 11px;padding-bottom:2px;scrollbar-width:none}
+.v42-rundown .rd-mode-tabs::-webkit-scrollbar{display:none}
+.v42-rundown .rd-mode-tabs button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:950;cursor:pointer}
+.v42-rundown .rd-mode-tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
+.rd-direction{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;background:#fff8df;border:1px solid #f0dfaa;border-radius:13px;padding:10px 11px;margin-bottom:10px}
+.rd-direction b{font-size:11px;color:#725411;white-space:nowrap}.rd-direction span{font-size:12px;line-height:1.55;font-weight:750;color:#67532a}
+.v42-rundown .v4-rundown-board svg{min-height:470px}
+.rd-lane{stroke:#d87b2b;stroke-width:1.35;stroke-dasharray:3 2;opacity:.34}
+.rd-backup-line{stroke:#6b927d;stroke-width:1.15;stroke-dasharray:2.5 2;opacity:.45}
+.rd-backup-label{font-size:2.15px;font-weight:950;fill:#466653;paint-order:stroke;stroke:#eef3e9;stroke-width:.7}
+.rd-pawn circle{fill:#fff;stroke:#0d3328;stroke-width:1}.rd-pawn text{font-size:2.7px;font-weight:950;fill:#0d3328}
+.rd-pawn.involved circle{fill:#0d3328}.rd-pawn.involved text{fill:#fff}.rd-pawn.muted{opacity:.38}
+.rd-runner circle{fill:#d87b2b}.rd-runner text{font-size:2.8px;font-weight:950;fill:#fff}
+.rd-ball circle{fill:#fff;stroke:#c84a3d;stroke-width:1}
+.rd-stay{margin-top:10px;background:#f6f7f5;border:1px solid var(--line);border-radius:14px;padding:11px 12px;display:grid;gap:5px}
+.rd-stay b{font-size:12px;font-weight:950;color:var(--green)}.rd-stay span{font-size:11px;line-height:1.55;color:var(--muted);font-weight:700}
+
+@media(max-width:620px){
+  .sim-phasebar{gap:2px}.sim-phasebar span{font-size:7.8px;padding:5px 1px}
+  .sim-role{grid-template-columns:36px 52px 1fr;font-size:12px}.sim-role em{font-size:8px}
+  .v42-rundown .v4-rundown-board svg{min-height:410px}
+  .rd-direction{grid-template-columns:1fr}.rd-direction b{margin-bottom:-2px}
+}
+
+
+/* ==============================
+   v4.3 학습 콘텐츠 / 설치 안내
+   ============================== */
+.v43-howto>p b{color:var(--green);font-weight:950}
+.v43-install-title{margin:18px 0 9px;padding-top:15px;border-top:1px solid #e9ede9;font-size:16px;font-weight:950}
+.v43-install-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.v43-install-card{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fbfcfa}
+.v43-install-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}.v43-install-head>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#eef2ef;font-size:22px;font-weight:950}.v43-install-head b{display:block;font-size:15px;font-weight:950}.v43-install-head small{display:block;margin-top:2px;font-size:10px;color:var(--muted);font-weight:750}
+.v43-install-block{padding:10px 0;border-top:1px solid #edf0ed}.v43-install-block:first-of-type{border-top:0;padding-top:0}.v43-install-block>b{font-size:12px;font-weight:950;color:var(--green)}.v43-install-block ol{margin:7px 0 0;padding-left:20px}.v43-install-block li{font-size:12px;line-height:1.62;margin:4px 0;color:#52605a;font-weight:650}.v43-install-note{margin-top:10px;padding:10px 12px;border-radius:13px;background:#f5f7f4;font-size:11px;line-height:1.55;color:var(--muted);font-weight:700}
+
+/* 포지션 기본기 완전정리 */
+.v43-position-deep{margin:14px 0 20px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:var(--shadow)}
+.v43-deep-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.v43-deep-head span{display:block;font-size:9px;font-weight:950;letter-spacing:.12em;color:#7b8a84;margin-bottom:3px}.v43-deep-head h3{margin:0;font-size:19px;font-weight:950;line-height:1.35}.v43-deep-head em{font-style:normal;font-size:10px;font-weight:900;color:#80530c;background:#f8e9ca;border-radius:999px;padding:6px 8px;white-space:nowrap}
+.v43-deep-intro{font-size:14px;line-height:1.7;color:#43524c;font-weight:700;margin:11px 0 14px;padding:12px 13px;border-radius:14px;background:#f3f7f4}
+.v43-fund-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.v43-fund-card{position:relative;border:1px solid #e6ebe7;border-radius:16px;padding:14px 13px 13px;background:#fff}.v43-fund-card .idx{position:absolute;right:11px;top:10px;font-size:10px;font-weight:950;color:#a8b2ad}.v43-fund-card h4{margin:0 26px 6px 0;font-size:14px;font-weight:950;color:var(--green)}.v43-fund-card p{font-size:12px;line-height:1.65;margin:0 0 7px;color:#52605a;font-weight:650}.v43-fund-card ul{margin:0;padding-left:18px}.v43-fund-card li{font-size:11px;line-height:1.55;margin:3px 0;color:#6a756f}
+.v43-deep-bottom{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}.v43-deep-bottom>div{border-radius:15px;padding:12px 13px}.v43-deep-bottom>div:first-child{background:#fff4f2;border:1px solid #f0ddd8}.v43-deep-bottom>div:last-child{background:#eef6f1;border:1px solid #d7e7dc}.v43-deep-bottom h4{margin:0 0 6px;font-size:13px;font-weight:950}.v43-deep-bottom ul{margin:0;padding-left:18px}.v43-deep-bottom li{font-size:11px;line-height:1.55;margin:3px 0}
+
+/* 제대로 배우기 */
+.v43-roadmap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0 0 14px}.v43-roadmap>div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px}.v43-roadmap b{display:block;font-size:12px;font-weight:950;color:var(--green);margin-bottom:4px}.v43-roadmap span{display:block;font-size:12px;line-height:1.5;color:var(--muted);font-weight:750}
+.v43-chapter-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.v43-chapter-card{position:relative;border:1px solid var(--line);background:#fff;border-radius:18px;padding:15px;text-align:left;cursor:pointer;box-shadow:0 4px 14px rgba(20,50,40,.04)}.v43-chapter-card .num{display:block;font-size:9px;font-weight:950;color:var(--green2);letter-spacing:.09em}.v43-chapter-card b{display:block;font-size:16px;font-weight:950;line-height:1.35;margin:4px 0}.v43-chapter-card>span:not(.num){display:block;font-size:12px;line-height:1.5;color:var(--muted)}.v43-chapter-card em{display:inline-block;margin-top:8px;font-style:normal;font-size:9px;font-weight:900;background:#edf3ef;color:#38634f;border-radius:999px;padding:4px 7px}
+.v43-learn-wrap{display:grid;gap:10px}.v43-learn-section{display:grid;grid-template-columns:48px 1fr;gap:12px;background:#fff;border:1px solid var(--line);border-radius:19px;padding:15px 16px;box-shadow:0 4px 14px rgba(20,50,40,.035)}.v43-learn-num{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#e8f0eb;color:var(--green);font-size:12px;font-weight:950}.v43-learn-body h3{margin:1px 0 7px;font-size:18px;font-weight:950}.v43-learn-body p{font-size:14px;line-height:1.72;margin:0 0 8px;color:#46564f}.v43-learn-body ul{margin:0;padding-left:20px}.v43-learn-body li{font-size:13px;line-height:1.65;margin:4px 0;color:#5d6964}.v43-learn-tip{margin-top:10px;padding:10px 12px;border-radius:13px;background:#fff7df;color:#6f551a;font-size:12px;line-height:1.6;font-weight:750}
+.v43-position-links{margin:12px 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.v43-position-links>b{display:block;font-size:13px;font-weight:950;margin-bottom:9px}.v43-position-links>div{display:flex;flex-wrap:wrap;gap:6px}.v43-position-links button{border:1px solid var(--line);background:#f7f9f7;border-radius:999px;padding:8px 10px;font-size:11px;font-weight:900;cursor:pointer}
+.v43-prevnext{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px 0}.v43-prevnext button{border:1px solid var(--line);background:#fff;border-radius:15px;padding:11px 12px;font-size:10px;font-weight:950;color:var(--green);text-align:left;cursor:pointer}.v43-prevnext button:last-child{text-align:right}.v43-prevnext button span{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media(max-width:620px){
+  .v43-install-grid,.v43-fund-grid,.v43-deep-bottom,.v43-roadmap,.v43-chapter-list{grid-template-columns:1fr}
+  .v43-deep-head{display:block}.v43-deep-head em{display:inline-block;margin-top:7px}
+  .v43-learn-section{grid-template-columns:38px 1fr;padding:13px}.v43-learn-num{width:34px;height:34px;border-radius:11px;font-size:10px}.v43-learn-body h3{font-size:16px}.v43-learn-body p{font-size:13px}.v43-learn-body li{font-size:12px}
+}
